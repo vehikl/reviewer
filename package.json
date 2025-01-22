@@ -24,6 +24,7 @@
   "dependencies": {
     "vue": "^3.4.0",
     "@vueuse/core": "^10.7.1",
-    "vuedraggable": "^4.1.0"
+    "vuedraggable": "^4.1.0",
+    "@heroicons/vue": "^2.1.1"
   }
 }

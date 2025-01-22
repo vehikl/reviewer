@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import draggable from 'vuedraggable'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 interface Person {
     id: number
@@ -30,21 +31,13 @@ const peopleList = computed({
                 <div class="flex items-center justify-between gap-4">
                     <div class="flex items-center gap-3 flex-1">
                         <div class="text-gray-400 group-hover:text-gray-600 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M7 2a2 2 0 1 0 0 4h10a2 2 0 1 0 0-4H7zM7 8a2 2 0 1 0 0 4h10a2 2 0 1 0 0-4H7zM7 14a2 2 0 1 0 0 4h10a2 2 0 1 0 0-4H7z" />
-                            </svg>
+                            <Bars3Icon class="h-5 w-5" />
                         </div>
                         <h3 class="text-lg font-medium text-gray-900">{{ person.name }}</h3>
                     </div>
                     <button class="delete-btn text-gray-400 hover:text-red-500 focus:outline-none"
                         @click.stop="emit('delete-person', person.id)">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd" />
-                        </svg>
+                        <XMarkIcon class="h-5 w-5" />
                     </button>
                 </div>
             </div>
