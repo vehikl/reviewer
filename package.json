@@ -2,11 +2,25 @@
   "name": "reviewer",
   "version": "1.0.0",
   "description": "",
+  "main": "dist-electron/main.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron:dev": "tsc -p electron/tsconfig.json && concurrently \"vite\" \"NODE_ENV=development electron .\"",
+    "electron:build": "vue-tsc && vite build && tsc -p electron/tsconfig.json && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.reviewer.app",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -15,6 +29,9 @@
     "@types/node": "^20.11.0",
     "@vitejs/plugin-vue": "^5.0.0",
     "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",

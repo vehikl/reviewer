@@ -19,6 +19,7 @@ node_modules
 # Build output
 dist
 dist-ssr
+dist-electron
 *.local
 
 # Editor directories and files
