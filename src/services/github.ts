@@ -9,6 +9,9 @@ export interface PullRequest {
     user: {
         login: string
     }
+    requested_reviewers: Array<{
+        login: string
+    }>
 }
 
 export const github = {
@@ -18,6 +21,10 @@ export const github = {
             repo: 'reviewer',
             state: 'open'
         })
-        return data
+        
+        // Filter for PRs with no reviewers
+        return data.filter(pr => 
+            !pr.requested_reviewers || pr.requested_reviewers.length === 0
+        ) as PullRequest[]
     }
 } 
