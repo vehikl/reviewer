@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import PeopleList from './components/PeopleList.vue'
 import AddPersonForm from './components/AddPersonForm.vue'
 import TopPerson from './components/TopPerson.vue'
+import PullRequests from './components/PullRequests.vue'
 
 interface Person {
     id: number
@@ -63,6 +64,7 @@ const handleSkip = () => {
             Pick a Reviewer
         </h1>
 
+        <PullRequests />
         <TopPerson :person="topPerson" @assign="handleAssign" @skip="handleSkip" />
 
         <div class="bg-white rounded-lg shadow">
