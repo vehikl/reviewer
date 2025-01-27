@@ -17,6 +17,7 @@ export interface PullRequest {
 export interface GitHubUser {
     login: string
     name: string | null
+    avatar_url: string
 }
 
 export const github = {
@@ -38,7 +39,8 @@ export const github = {
             const { data } = await octokit.users.getByUsername({ username })
             return {
                 login: data.login,
-                name: data.name
+                name: data.name,
+                avatar_url: data.avatar_url
             }
         } catch {
             return null

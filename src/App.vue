@@ -9,6 +9,7 @@ interface Person {
     id: number
     username: string
     name: string | null
+    avatar_url: string
 }
 
 const people = ref<Person[]>([])
@@ -18,9 +19,9 @@ const topPerson = computed(() =>
     currentIndex.value < people.value.length ? people.value[currentIndex.value] : undefined
 )
 
-const addPerson = (username: string, name: string | null) => {
+const addPerson = (username: string, name: string | null, avatar_url: string) => {
     const newId = Math.max(...people.value.map(p => p.id), 0) + 1
-    people.value.unshift({ id: newId, username, name })
+    people.value.unshift({ id: newId, username, name, avatar_url })
     currentIndex.value = 0
 }
 

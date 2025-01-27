@@ -7,6 +7,7 @@ interface Person {
     id: number
     name: string
     username: string
+    avatar_url: string
 }
 
 const props = defineProps<{
@@ -36,6 +37,7 @@ const peopleList = computed({
                         <div class="text-gray-400 group-hover:text-gray-600 transition-colors">
                             <Bars3Icon class="h-5 w-5" />
                         </div>
+                        <img :src="person.avatar_url" :alt="person.username" class="w-8 h-8 rounded-full object-cover">
                         <h3 class="text-lg font-medium"
                             :class="{ 'text-indigo-900': index === currentIndex, 'text-gray-900': index !== currentIndex }">
                             {{ person.name || person.username }}
