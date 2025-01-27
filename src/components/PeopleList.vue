@@ -6,6 +6,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 interface Person {
     id: number
     name: string
+    username: string
 }
 
 const props = defineProps<{
@@ -37,7 +38,8 @@ const peopleList = computed({
                         </div>
                         <h3 class="text-lg font-medium"
                             :class="{ 'text-indigo-900': index === currentIndex, 'text-gray-900': index !== currentIndex }">
-                            {{ person.name }}
+                            {{ person.name || person.username }}
+                            <span class="text-sm text-gray-500 ml-2">@{{ person.username }}</span>
                         </h3>
                     </div>
                     <button class="delete-btn text-gray-400 hover:text-red-500 focus:outline-none"

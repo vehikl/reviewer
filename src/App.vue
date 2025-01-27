@@ -7,27 +7,20 @@ import PullRequests from './components/PullRequests.vue'
 
 interface Person {
     id: number
-    name: string
+    username: string
+    name: string | null
 }
 
-const people = ref<Person[]>([
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" },
-    { id: 3, name: "Bob Johnson" },
-    { id: 4, name: "Alice Williams" },
-    { id: 5, name: "Charlie Brown" },
-])
-
+const people = ref<Person[]>([])
 const currentIndex = ref(0)
 
 const topPerson = computed(() =>
     currentIndex.value < people.value.length ? people.value[currentIndex.value] : undefined
 )
 
-const addPerson = (name: string) => {
+const addPerson = (username: string, name: string | null) => {
     const newId = Math.max(...people.value.map(p => p.id), 0) + 1
-    people.value.unshift({ id: newId, name })
-    // Reset current index when adding new person at the top
+    people.value.unshift({ id: newId, username, name })
     currentIndex.value = 0
 }
 
