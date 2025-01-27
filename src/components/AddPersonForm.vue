@@ -13,24 +13,24 @@ const error = ref<string | null>(null)
 
 const handleSubmit = async () => {
     const username = newUsername.value.trim()
-    if (username) {
-        isLoading.value = true
-        error.value = null
+    if (!username) return
+    
+    isLoading.value = true
+    error.value = null
 
-        try {
-            const user = await github.getUser(username)
-            if (user) {
-                emit('add-person', user)
-                newUsername.value = ''
-            } else {
-                error.value = 'GitHub user not found'
-            }
-        } catch (e) {
-            error.value = 'Failed to check GitHub user'
-            console.error(e)
-        } finally {
-            isLoading.value = false
+    try {
+        const user = await github.getUser(username)
+        if (user) {
+            emit('add-person', user)
+            newUsername.value = ''
+        } else {
+            error.value = 'GitHub user not found'
         }
+    } catch (e) {
+        error.value = 'Failed to check GitHub user'
+        console.error(e)
+    } finally {
+        isLoading.value = false
     }
 }
 </script>
