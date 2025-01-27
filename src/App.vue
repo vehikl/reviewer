@@ -4,11 +4,12 @@ import PeopleList from './components/PeopleList.vue'
 import AddPersonForm from './components/AddPersonForm.vue'
 import TopPerson from './components/TopPerson.vue'
 import PullRequests from './components/PullRequests.vue'
+import { type GitHubUser } from './services/github'
 
 interface Person {
     id: number
-    username: string
     name: string | null
+    username: string
     avatar_url: string
 }
 
@@ -19,9 +20,15 @@ const topPerson = computed(() =>
     currentIndex.value < people.value.length ? people.value[currentIndex.value] : undefined
 )
 
-const addPerson = (username: string, name: string | null, avatar_url: string) => {
+const addPerson = (person: GitHubUser) => {
     const newId = Math.max(...people.value.map(p => p.id), 0) + 1
-    people.value.unshift({ id: newId, username, name, avatar_url })
+    people.value.unshift({ 
+        id: newId, 
+        name: person.name,
+        username: person.login,
+        avatar_url: person.avatar_url
+    })
+    // Reset current index when adding new person at the top
     currentIndex.value = 0
 }
 

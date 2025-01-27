@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
-import { github } from '../services/github'
+import { github, type GitHubUser } from '../services/github'
 
 const emit = defineEmits<{
-    (e: 'add-person', username: string, name: string | null, avatar_url: string): void
+    (e: 'add-person', person: GitHubUser): void
 }>()
 
 const newUsername = ref('')
@@ -20,7 +20,7 @@ const handleSubmit = async () => {
         try {
             const user = await github.getUser(username)
             if (user) {
-                emit('add-person', user.login, user.name, user.avatar_url)
+                emit('add-person', user)
                 newUsername.value = ''
             } else {
                 error.value = 'GitHub user not found'
