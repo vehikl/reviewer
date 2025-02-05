@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { CheckCircleIcon, ForwardIcon } from '@heroicons/vue/24/outline'
-import type { PullRequest } from '../services/github'
-
-interface Person {
-    id: number
-    name: string | null
-    username: string
-    avatar_url: string
-}
+import { type Person, type PullRequest } from '../types'
 
 const props = defineProps<{
     person?: Person

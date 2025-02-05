@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
-import { github, type GitHubUser } from '../services/github'
+import { github } from '../services/github'
+import { type GitHubUser } from '../types'
 
 const emit = defineEmits<{
     (e: 'add-person', person: GitHubUser): void

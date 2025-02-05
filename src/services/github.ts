@@ -1,24 +1,7 @@
 import { Octokit } from '@octokit/rest'
+import { type PullRequest, type GitHubUser } from '../types'
 
 const octokit = new Octokit()
-
-export interface PullRequest {
-    number: number
-    title: string
-    html_url: string
-    user: {
-        login: string
-    }
-    requested_reviewers: Array<{
-        login: string
-    }>
-}
-
-export interface GitHubUser {
-    login: string
-    name: string | null
-    avatar_url: string
-}
 
 export const github = {
     async getPullRequests(): Promise<PullRequest[]> {

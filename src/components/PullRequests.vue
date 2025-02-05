@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { github, type PullRequest } from '../services/github'
+import { github } from '../services/github'
+import { type PullRequest } from '../types'
 
 const pullRequests = ref<PullRequest[]>([])
 const isLoading = ref(true)

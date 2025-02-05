@@ -4,14 +4,7 @@ import PeopleList from './components/PeopleList.vue'
 import AddPersonForm from './components/AddPersonForm.vue'
 import TopPerson from './components/TopPerson.vue'
 import PullRequests from './components/PullRequests.vue'
-import { type GitHubUser, type PullRequest } from './services/github'
-
-interface Person {
-    id: number
-    name: string | null
-    username: string
-    avatar_url: string
-}
+import { type Person, type GitHubUser, type PullRequest } from './types'
 
 const people = ref<Person[]>([])
 const currentIndex = ref(0)

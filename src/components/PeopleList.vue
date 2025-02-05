@@ -2,13 +2,7 @@
 import { computed } from 'vue'
 import draggable from 'vuedraggable'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-
-interface Person {
-    id: number
-    name: string | null
-    username: string
-    avatar_url: string
-}
+import { type Person } from '../types'
 
 const props = defineProps<{
     people: Person[]
