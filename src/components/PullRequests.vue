@@ -46,11 +46,7 @@ onMounted(async () => {
         </div>
 
         <ul v-else class="divide-y divide-gray-200">
-            <li v-for="pr in pullRequests" 
-                :key="pr.number" 
-                class="py-3"
-                @click="handleSelect(pr)"
-            >
+            <li v-for="pr in pullRequests" :key="pr.number" class="py-3" @click="handleSelect(pr)">
                 <div class="flex items-center justify-between hover:bg-gray-50 p-2 rounded cursor-pointer"
                     :class="{ 'bg-indigo-50': selectedPR?.number === pr.number }">
                     <div>

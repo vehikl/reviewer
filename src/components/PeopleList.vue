@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 interface Person {
     id: number
-    name: string
+    name: string | null
     username: string
     avatar_url: string
 }
