@@ -6,6 +6,17 @@ const pullRequests = ref<PullRequest[]>([])
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
+const emit = defineEmits<{
+    (e: 'update:selected', pr: PullRequest | null): void
+}>()
+
+const selectedPR = ref<PullRequest | null>(null)
+
+const handleSelect = (pr: PullRequest) => {
+    selectedPR.value = selectedPR.value?.number === pr.number ? null : pr
+    emit('update:selected', selectedPR.value)
+}
+
 onMounted(async () => {
     try {
         pullRequests.value = await github.getPullRequests()
@@ -35,15 +46,19 @@ onMounted(async () => {
         </div>
 
         <ul v-else class="divide-y divide-gray-200">
-            <li v-for="pr in pullRequests" :key="pr.number" class="py-3">
-                <a :href="pr.html_url" target="_blank"
-                    class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
+            <li v-for="pr in pullRequests" 
+                :key="pr.number" 
+                class="py-3"
+                @click="handleSelect(pr)"
+            >
+                <div class="flex items-center justify-between hover:bg-gray-50 p-2 rounded cursor-pointer"
+                    :class="{ 'bg-indigo-50': selectedPR?.number === pr.number }">
                     <div>
                         <span class="text-gray-900 font-medium">#{{ pr.number }}</span>
                         <span class="ml-2 text-gray-700">{{ pr.title }}</span>
                     </div>
                     <span class="text-gray-500 text-sm">by {{ pr.user.login }}</span>
-                </a>
+                </div>
             </li>
         </ul>
     </div>

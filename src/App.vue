@@ -4,7 +4,7 @@ import PeopleList from './components/PeopleList.vue'
 import AddPersonForm from './components/AddPersonForm.vue'
 import TopPerson from './components/TopPerson.vue'
 import PullRequests from './components/PullRequests.vue'
-import { type GitHubUser } from './services/github'
+import { type GitHubUser, type PullRequest } from './services/github'
 
 interface Person {
     id: number
@@ -15,6 +15,7 @@ interface Person {
 
 const people = ref<Person[]>([])
 const currentIndex = ref(0)
+const selectedPR = ref<PullRequest | null>(null)
 
 const topPerson = computed(() =>
     currentIndex.value < people.value.length ? people.value[currentIndex.value] : undefined
@@ -65,8 +66,13 @@ const handleSkip = () => {
             Pick a Reviewer
         </h1>
 
-        <PullRequests />
-        <TopPerson :person="topPerson" @assign="handleAssign" @skip="handleSkip" />
+        <PullRequests v-model:selected="selectedPR" />
+        <TopPerson 
+            :person="topPerson" 
+            :selected-pr="selectedPR"
+            @assign="handleAssign" 
+            @skip="handleSkip" 
+        />
 
         <div class="bg-white rounded-lg shadow">
             <AddPersonForm @add-person="addPerson" />
