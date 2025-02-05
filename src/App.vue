@@ -5,10 +5,12 @@ import AddPersonForm from './components/AddPersonForm.vue'
 import TopPerson from './components/TopPerson.vue'
 import PullRequests from './components/PullRequests.vue'
 import { type Person, type GitHubUser, type PullRequest } from './types'
+import { github } from './services/github'
 
 const people = ref<Person[]>([])
 const currentIndex = ref(0)
 const selectedPR = ref<PullRequest | null>(null)
+const isAssigning = ref(false)
 
 const topPerson = computed(() =>
     currentIndex.value < people.value.length ? people.value[currentIndex.value] : undefined
@@ -37,12 +39,25 @@ const deletePerson = (id: number) => {
     }
 }
 
-const handleAssign = () => {
-    if (people.value.length > 0) {
+const handleAssign = async () => {
+    if (!selectedPR.value || !topPerson.value || isAssigning.value) return
+
+    try {
+        isAssigning.value = true
+        await github.assignReviewer(selectedPR.value.number, topPerson.value.username)
+        
+        // Move the assigned person to the end of the list
         const [assigned] = people.value.splice(currentIndex.value, 1)
         people.value.push(assigned)
-        // Always reset to first person after assignment
+        
+        // Reset selections and index
+        selectedPR.value = null
         currentIndex.value = 0
+    } catch (error) {
+        console.error('Failed to assign reviewer:', error)
+        // You might want to show an error message to the user here
+    } finally {
+        isAssigning.value = false
     }
 }
 
@@ -63,6 +78,7 @@ const handleSkip = () => {
         <TopPerson 
             :person="topPerson" 
             :selected-pr="selectedPR"
+            :is-assigning="isAssigning"
             @assign="handleAssign" 
             @skip="handleSkip" 
         />

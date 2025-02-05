@@ -1,13 +1,24 @@
 import { Octokit } from '@octokit/rest'
 import { type PullRequest, type GitHubUser } from '../types'
 
-const octokit = new Octokit()
+// Get token from environment variable
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN
+const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER || 'vehikl'
+const GITHUB_REPO = import.meta.env.VITE_GITHUB_REPO || 'reviewer'
+
+if (!GITHUB_TOKEN) {
+    console.error('VITE_GITHUB_TOKEN environment variable is not set')
+}
+
+const octokit = new Octokit({
+    auth: GITHUB_TOKEN
+})
 
 export const github = {
     async getPullRequests(): Promise<PullRequest[]> {
         const { data } = await octokit.pulls.list({
-            owner: 'vehikl',
-            repo: 'reviewer',
+            owner: GITHUB_OWNER,
+            repo: GITHUB_REPO,
             state: 'open'
         })
         
@@ -28,5 +39,14 @@ export const github = {
         } catch {
             return null
         }
+    },
+
+    async assignReviewer(prNumber: number, reviewerUsername: string): Promise<void> {
+        await octokit.pulls.requestReviewers({
+            owner: GITHUB_OWNER,
+            repo: GITHUB_REPO,
+            pull_number: prNumber,
+            reviewers: [reviewerUsername]
+        })
     }
 } 
